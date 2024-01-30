@@ -1,23 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import Auth from './components/Auth';
 
 function App() {
+
+  const divStyle = {
+    backgroundImage: 'url("/storage_backg_blue.jpg")',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    height: '100vh'
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={divStyle}>
+      <Auth/>
     </div>
   );
 }
