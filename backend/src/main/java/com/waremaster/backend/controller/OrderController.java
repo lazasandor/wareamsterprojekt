@@ -15,10 +15,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping(path="/api/order", produces="application/json")
 public class OrderController {
-	
+
 	@Autowired
 	OrderRepository orderRepository;
-	
+
 	@PostMapping(path="/save")
 	public void save(@RequestBody Order order) {
 		orderRepository.save(order);

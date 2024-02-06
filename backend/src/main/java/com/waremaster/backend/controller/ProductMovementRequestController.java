@@ -15,7 +15,7 @@ public class ProductMovementRequestController {
 
 	@Autowired
 	ProductMovementRequestRepository productMovementRequestRepository;
-	
+
 	@PostMapping
 	public void save(@RequestBody ProductMovementRequest productMovementRequest) {
 		productMovementRequestRepository.save(productMovementRequest);

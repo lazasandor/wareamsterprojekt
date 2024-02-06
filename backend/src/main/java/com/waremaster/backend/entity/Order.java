@@ -14,28 +14,28 @@ import lombok.ToString;
 @ToString
 @Entity
 public class Order {
-	
+
 	@Id
 	@Column(name="id")
 	protected Integer id;
-	
+
 	@Column(name="user_id")
 	protected Integer user_id;
-	
+
 	@Column(name="product_id")
 	protected Integer product_id;
-	
+
 	@Column(name="order_date")
 	protected LocalDateTime order_date;
-	
+
 	@Column(name="price")
 	protected Integer price;
-	
+
 	@Column(name="quantity")
 	protected Integer quantity;
 
 	//Getters
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -59,7 +59,7 @@ public class Order {
 	public Integer getQuantity() {
 		return quantity;
 	}
-	
+
 	//Setters
 
 	public void setId(Integer id) {
@@ -86,6 +86,6 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	
-	
+
+
 }

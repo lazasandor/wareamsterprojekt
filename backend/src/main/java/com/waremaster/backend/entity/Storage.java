@@ -12,12 +12,12 @@ public class Storage {
 	@Id
 	@Column(name="location_id")
 	protected Integer location_id;
-	
+
 	@Column(name="location_name")
 	protected String location_name;
 
 	//Getters
-	
+
 	public Integer getLocation_id() {
 		return location_id;
 	}
@@ -27,7 +27,7 @@ public class Storage {
 	}
 
 	//Setters
-	
+
 	public void setLocation_id(Integer location_id) {
 		this.location_id = location_id;
 	}
@@ -35,6 +35,6 @@ public class Storage {
 	public void setLocation_name(String location_name) {
 		this.location_name = location_name;
 	}
-	
-	
+
+
 }

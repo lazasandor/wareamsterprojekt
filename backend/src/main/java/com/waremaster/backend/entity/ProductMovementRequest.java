@@ -5,45 +5,45 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.ToString;
 
 @Entity
 @ToString
 public class ProductMovementRequest {
-	
+
 	@Id
 	@Column(name="id")
 	protected Integer id;
-	
+
 	@Column(name="product_id")
 	protected Integer product_id;
-	
+
 	@Column(name="from_storage_location_id")
 	protected Integer from_storage_location_id;
-	
+
 	@Column(name="to_storage_location_id")
 	protected Integer to_storage_location_id;
-	
+
 	@Column(name="user_id")
 	protected Integer user_id;
-	
+
 	@Column(name="quantity")
 	protected Integer quantity;
-	
+
 	@Column(name="movement_date")
 	protected LocalDateTime movement_date;
-	
+
 	@Column(name="status")
 	protected String status;
-	
-	@ManyToOne()
-	@JoinColumn(name = "user_id", nullable = false)
-	User user;
-	
+
+	/*
+	 * @ManyToOne()
+	 *
+	 * @JoinColumn(name = "user_id", nullable = false) User user;
+	 */
+
 	//Getters
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -65,13 +65,13 @@ public class ProductMovementRequest {
 	public LocalDateTime getMovement_date() {
 		return movement_date;
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}
-	
+
 	//Setters
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}

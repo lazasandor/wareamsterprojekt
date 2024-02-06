@@ -8,28 +8,28 @@ import lombok.ToString;
 @Entity
 @ToString
 public class Product {
-	
+
 	@Id
 	@Column(name="id")
 	protected Integer id;
-	
+
 	@Column(name="name")
 	protected String name;
-	
+
 	@Column(name="description")
 	protected String description;
-	
+
 	@Column(name="price")
 	protected Integer price;
-	
+
 	@Column(name="quantity")
 	protected Integer quantity;
-	
+
 	@Column(name="storage_location_id")
 	protected Integer storage_location_id;
 
 	//Getters
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -55,7 +55,7 @@ public class Product {
 	}
 
 	//Setters
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -79,6 +79,6 @@ public class Product {
 	public void setStorage_location_id(Integer storage_location_id) {
 		this.storage_location_id = storage_location_id;
 	}
-	
-	
+
+
 }

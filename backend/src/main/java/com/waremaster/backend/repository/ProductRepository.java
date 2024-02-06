@@ -12,10 +12,13 @@ import com.waremaster.backend.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 
+	@Override
 	Product save(Product product);
-	
+
+	@Override
 	@Query("select p from Product where p.id = ?1")
 	Optional<Product> findById(Integer id);
-	
+
+	@Override
 	List<Product> findAll();
 }
