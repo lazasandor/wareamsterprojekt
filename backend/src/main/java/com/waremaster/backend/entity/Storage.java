@@ -10,31 +10,60 @@ import lombok.ToString;
 public class Storage {
 
 	@Id
-	@Column(name="location_id")
-	protected Integer location_id;
+	@Column(name="id")
+	protected Long id;
 
-	@Column(name="location_name")
-	protected String location_name;
+	@Column(name="address")
+	protected String address;
 
-	//Getters
+	@Column(name="county")
+	protected String county;
+	
+	@Column(name="city")
+	protected String city;
+	
+	@Column(name="zipcode")
+	protected Integer zipcode;
 
-	public Integer getLocation_id() {
-		return location_id;
+	public Long getId() {
+		return id;
 	}
 
-	public String getLocation_name() {
-		return location_name;
+	public String getAddress() {
+		return address;
 	}
 
-	//Setters
-
-	public void setLocation_id(Integer location_id) {
-		this.location_id = location_id;
+	public String getCounty() {
+		return county;
 	}
 
-	public void setLocation_name(String location_name) {
-		this.location_name = location_name;
+	public String getCity() {
+		return city;
 	}
 
+	public Integer getZipcode() {
+		return zipcode;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setZipcode(Integer zipcode) {
+		this.zipcode = zipcode;
+	}
+	
+	
 }

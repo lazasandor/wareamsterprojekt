@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.waremaster.backend.entity.ProductMovementRequest;
 
 @Repository
-public interface ProductMovementRequestRepository extends JpaRepository<ProductMovementRequest, Integer>{
+public interface ProductMovementRequestRepository extends JpaRepository<ProductMovementRequest, Long>{
 
 }

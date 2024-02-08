@@ -2,7 +2,12 @@ package com.waremaster.backend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
@@ -10,8 +15,9 @@ import lombok.ToString;
 public class Product {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	protected Integer id;
+	protected Long id;
 
 	@Column(name="name")
 	protected String name;
@@ -25,12 +31,13 @@ public class Product {
 	@Column(name="quantity")
 	protected Integer quantity;
 
-	@Column(name="storage_location_id")
-	protected Integer storage_location_id;
+	@ManyToOne()
+	@JoinColumn(name="category_id")
+	protected Category category;
 
 	//Getters
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -49,14 +56,14 @@ public class Product {
 	public Integer getQuantity() {
 		return quantity;
 	}
-
-	public Integer getStorage_location_id() {
-		return storage_location_id;
+	
+	public Category getCategory() {
+		return category;
 	}
 
 	//Setters
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -76,9 +83,7 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public void setStorage_location_id(Integer storage_location_id) {
-		this.storage_location_id = storage_location_id;
+	public void setCategory(Category category) {
+		this.category = category;	
 	}
-
-
 }

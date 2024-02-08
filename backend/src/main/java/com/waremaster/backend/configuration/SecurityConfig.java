@@ -7,8 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
+import org.springframework.security.web.server.csrf.ServerCsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,8 +24,10 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
+
 		http
-			.csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
+		.csrf(csrf -> csrf.disable())
+			//.csrf((csrf) -> csrf.disable())
 			.cors((cors) -> cors.configurationSource(corsConfigurationSource()));
 		return http.build();
 	}
@@ -32,8 +37,9 @@ public class SecurityConfig {
 	    CorsConfiguration configuration = new CorsConfiguration();
 	    configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 	    configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
-	    configuration.setExposedHeaders(Arrays.asList("/**"));
-	    configuration.setAllowedHeaders(Arrays.asList("/**"));
+	    configuration.setExposedHeaders(Arrays.asList("*"));
+	    configuration.setAllowedHeaders(Arrays.asList("*"));
+	    configuration.setAllowCredentials(true);
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    source.registerCorsConfiguration("/**", configuration);
 	    return source;

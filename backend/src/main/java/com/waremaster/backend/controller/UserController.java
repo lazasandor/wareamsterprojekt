@@ -44,7 +44,7 @@ public class UserController {
 		if (u==null) {
 			return null;
 		}
-
+		System.out.println("Login called with: " + u.toString());
 		return u.createUserToken(tokenProvider.createToken(""+u.getId()));
 	}
 

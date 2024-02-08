@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository;
 import com.waremaster.backend.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer>{
+public interface ProductRepository extends JpaRepository<Product, Long>{
 
 	@Override
 	Product save(Product product);
 
 	@Override
 	@Query("select p from Product where p.id = ?1")
-	Optional<Product> findById(Integer id);
+	Optional<Product> findById(Long id);
 
 	@Override
 	List<Product> findAll();

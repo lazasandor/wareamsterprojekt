@@ -2,6 +2,8 @@ package com.waremaster.backend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.ToString;
 
@@ -10,8 +12,9 @@ import lombok.ToString;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	protected Integer id;
+	protected Long id;
 
 	@Column(name="name")
 	protected String name;
@@ -25,15 +28,15 @@ public class User {
 	@Column(name="email")
 	protected String email;
 
-	@Column(name="admin")
-	protected Boolean admin;
+	@Column(name="role")
+	protected String role;
 
 //	@OneToMany(mappedBy = "user")
 //	List<ProductMovementRequest> productMovementRequests;
 
 	//Getters
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -53,13 +56,13 @@ public class User {
 		return email;
 	}
 
-	public Boolean getAdmin() {
-		return admin;
+	public String getRole() {
+		return role;
 	}
 
 	//Setters
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -79,8 +82,8 @@ public class User {
 		this.email = email;
 	}
 
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String[] createUserToken(String tkn) {

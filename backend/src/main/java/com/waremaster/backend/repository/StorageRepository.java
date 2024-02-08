@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.waremaster.backend.entity.Storage;
 
 @Repository
-public interface StorageRepository extends JpaRepository<Storage, Integer>{
+public interface StorageRepository extends JpaRepository<Storage, Long>{
 
 }

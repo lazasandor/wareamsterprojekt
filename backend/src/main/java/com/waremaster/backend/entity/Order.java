@@ -4,7 +4,11 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -16,17 +20,12 @@ import lombok.ToString;
 public class Order {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	protected Integer id;
-
-	@Column(name="user_id")
-	protected Integer user_id;
-
-	@Column(name="product_id")
-	protected Integer product_id;
+	protected Long id;
 
 	@Column(name="order_date")
-	protected LocalDateTime order_date;
+	protected LocalDateTime orderDate;
 
 	@Column(name="price")
 	protected Integer price;
@@ -34,22 +33,25 @@ public class Order {
 	@Column(name="quantity")
 	protected Integer quantity;
 
-	//Getters
+	@Column(name="customer_name")
+	protected String customerName;
+	
+	@Column(name="customer_address")
+	protected String customerAddress;
+	
+	@Column(name="customer_phone")
+	protected String customerPhone;
 
-	public Integer getId() {
+	@ManyToOne()
+	@JoinColumn(name="storage_id")
+	protected Storage storageOrderedFrom;
+	
+	public Long getId() {
 		return id;
 	}
 
-	public Integer getUser_id() {
-		return user_id;
-	}
-
-	public Integer getProduct_id() {
-		return product_id;
-	}
-
-	public LocalDateTime getOrder_date() {
-		return order_date;
+	public LocalDateTime getOrderDate() {
+		return orderDate;
 	}
 
 	public Integer getPrice() {
@@ -60,22 +62,24 @@ public class Order {
 		return quantity;
 	}
 
-	//Setters
+	public String getCustomerName() {
+		return customerName;
+	}
 
-	public void setId(Integer id) {
+	public String getCustomerAddress() {
+		return customerAddress;
+	}
+
+	public String getCustomerPhone() {
+		return customerPhone;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
-	}
-
-	public void setProduct_id(Integer product_id) {
-		this.product_id = product_id;
-	}
-
-	public void setOrder_date(LocalDateTime order_date) {
-		this.order_date = order_date;
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public void setPrice(Integer price) {
@@ -86,6 +90,17 @@ public class Order {
 		this.quantity = quantity;
 	}
 
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
 
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
+	}
 
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
+	}
+	
+	
 }
