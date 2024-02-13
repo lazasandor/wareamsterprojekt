@@ -6,13 +6,16 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LockIcon from "@mui/icons-material/Lock";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import UserService from "../services/UserService";
 
-export default function Auth (){
+export default function Auth (props){
   const navigate = useNavigate();
   const [loginInputs, setLoginInputs] = useState({
     email: "",
     password: "",
   });
+
+  const [alertMessage, setAlertMessage] = useState("")
 
   const handleChange = (e) => {
     setLoginInputs((prevState) => ({
@@ -22,10 +25,22 @@ export default function Auth (){
   };
 
   const handleSubmit = (e) => {
+    let user = {
+      email: loginInputs.email,
+      password: loginInputs.password,
+    };
     e.preventDefault();
-    console.log(loginInputs);
-    navigate("/home");
+    UserService.loginUser(user).then((res) => {
+      if(res.data){
+        localStorage.setItem("authToken", res.data[1])
+        navigate("/products")
+      }else{
+        setAlertMessage("Hibás email vagy jelszó.\nPróbáld Újra!")
+      }
+    })
   };
+
+
 
   return (
     <div
@@ -98,6 +113,9 @@ export default function Auth (){
               value={loginInputs.password}
               onChange={handleChange}
             />
+            <div>
+              {alertMessage}
+            </div>
             <Button
               endIcon={<LoginIcon />}
               type="submit"

@@ -15,11 +15,11 @@ public class ProductToOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	protected Long id;
-	
+
 	@ManyToOne()
 	@JoinColumn(name="product_id")
 	protected Product product;
-	
+
 	@ManyToOne()
 	@JoinColumn(name="order_id")
 	protected Order order;
@@ -47,6 +47,6 @@ public class ProductToOrder {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	
-	
+
+
 }

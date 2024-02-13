@@ -15,15 +15,15 @@ public class ProductToStorage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	protected Long id;
-	
+
 	@ManyToOne()
 	@JoinColumn(name="product_id")
 	protected Product product;
-	
+
 	@ManyToOne()
 	@JoinColumn(name="storage_id")
 	protected Storage storage;
-	
+
 	@Column(name="quantity")
 	protected Integer quantity;
 
@@ -58,5 +58,5 @@ public class ProductToStorage {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
+
 }

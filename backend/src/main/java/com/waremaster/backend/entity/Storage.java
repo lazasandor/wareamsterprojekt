@@ -18,10 +18,10 @@ public class Storage {
 
 	@Column(name="county")
 	protected String county;
-	
+
 	@Column(name="city")
 	protected String city;
-	
+
 	@Column(name="zipcode")
 	protected Integer zipcode;
 
@@ -64,6 +64,6 @@ public class Storage {
 	public void setZipcode(Integer zipcode) {
 		this.zipcode = zipcode;
 	}
-	
-	
+
+
 }

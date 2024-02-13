@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
@@ -56,7 +55,7 @@ public class Product {
 	public Integer getQuantity() {
 		return quantity;
 	}
-	
+
 	public Category getCategory() {
 		return category;
 	}
@@ -84,6 +83,6 @@ public class Product {
 	}
 
 	public void setCategory(Category category) {
-		this.category = category;	
+		this.category = category;
 	}
 }

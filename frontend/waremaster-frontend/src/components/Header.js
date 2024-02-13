@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import Tabs from "@mui/material/Tabs";
@@ -8,14 +8,18 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { AbcOutlined } from "@mui/icons-material";
-export default function Header() {
+import UserService from "../services/UserService";
+export default function Header(props) {
   const navigate = useNavigate();
+
+
+
   const handleNavbarClick = (page) => {
     switch (page) {
       case "Requests":
         navigate("/requests");
         break;
-      case 1:
+      case "Storages":
         navigate("/storages");
         break;
       case "Products":
@@ -27,13 +31,11 @@ export default function Header() {
       case "Request":
         navigate("/request");
         break;
-      case "About":
-        navigate("/about");
-        break;
       case "Account":
         navigate("/account");
         break;
       case "Logout":
+        localStorage.removeItem("authToken");
         navigate("/");
         break;
     }
@@ -43,7 +45,7 @@ export default function Header() {
 
   return (
     <React.Fragment>
-      <AppBar color="warning" sx={{padding:"auto"}}>
+      <AppBar color="warning" sx={{ padding: "auto" }}>
         <Toolbar>
           <Box display="flex" alignItems="center" sx={{ marginRight: 1 }}>
             <WidgetsIcon />
@@ -81,7 +83,6 @@ export default function Header() {
               label="Account"
               onClick={() => handleNavbarClick("Account")}
             ></Tab>
-            <Tab label="About" onClick={() => handleNavbarClick("About")}></Tab>
           </Tabs>
 
           <Button

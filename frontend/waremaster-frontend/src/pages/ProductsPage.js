@@ -1,9 +1,15 @@
 import React from 'react'
 import Header from '../components/Header'
+import ProductsDataTable from '../components/ProductsDataTable'
+import { Box } from '@mui/material'
 const ProductsPage = () => {
   return (
     <div>
-        <Header/>
+       <Box>
+        <Header />
+        <ProductsDataTable />
+      </Box>
+ 
     </div>
   )
 }

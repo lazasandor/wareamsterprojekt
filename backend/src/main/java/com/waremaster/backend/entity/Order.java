@@ -35,17 +35,17 @@ public class Order {
 
 	@Column(name="customer_name")
 	protected String customerName;
-	
+
 	@Column(name="customer_address")
 	protected String customerAddress;
-	
+
 	@Column(name="customer_phone")
 	protected String customerPhone;
 
 	@ManyToOne()
 	@JoinColumn(name="storage_id")
 	protected Storage storageOrderedFrom;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -101,6 +101,6 @@ public class Order {
 	public void setCustomerPhone(String customerPhone) {
 		this.customerPhone = customerPhone;
 	}
-	
-	
+
+
 }

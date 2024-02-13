@@ -15,14 +15,14 @@ public class ProductToRequest {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	protected Long id;
-	
+
 	@ManyToOne()
 	@JoinColumn(name="product_id")
 	protected Product product;
-	
+
 	@ManyToOne()
 	@JoinColumn(name="request_id")
 	protected ProductMovementRequest productMovementRequest;
-	
-	
+
+
 }
