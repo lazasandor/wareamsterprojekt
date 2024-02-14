@@ -55,4 +55,9 @@ public class ProductController {
 		productRepository.save(product);
 	}
 
+	@PostMapping(path="/delete/{id}")
+	public void delete(@PathVariable Long id) {
+		System.out.println("Delete called with id: " + id);
+		productRepository.deleteById(id);
+	}
 }

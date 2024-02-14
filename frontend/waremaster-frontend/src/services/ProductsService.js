@@ -14,6 +14,9 @@ const ProductsService = {
     };
 
     return axios.post(PRODUCT_API_URL + "findbyparameter" + "?page=" + page + "&size=" + size, requestBody)
+  },
+  delete: (id) => {
+    return axios.post(PRODUCT_API_URL + "delete/" + id);
   }
 };
 
