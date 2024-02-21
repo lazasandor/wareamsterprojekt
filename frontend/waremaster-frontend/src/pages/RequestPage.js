@@ -1,11 +1,12 @@
 import React from 'react'
 import Header from '../components/Header'
-import { useActionData, useNavigate } from 'react-router-dom'
+import RequestProductMovement from '../components/RequestProductMovement'
 const RequestPage = () => {
 
   return (
     <div>
         <Header/>
+        <RequestProductMovement/>
     </div>
   )
 }

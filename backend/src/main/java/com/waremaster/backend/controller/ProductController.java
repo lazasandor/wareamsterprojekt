@@ -48,9 +48,24 @@ public class ProductController {
 		Page<ProductDto> result = productService.findByParameters(product, page, size);
 		return result;
 	}
+	
+	@GetMapping(path="/findbyid/{id}")
+	public Product findById(@PathVariable Long id) {
+		if(productRepository.findById(id).isPresent()) {
+			return productRepository.findById(id).get();
+		}
+		
+		return null;
+	}
+	
+	@PostMapping(path=("/update"))
+	public void update(@RequestBody Product product) {
+		productService.update(product);
+	}
 
 	@PostMapping(path="/save")
 	public void save(@RequestBody Product product) {
+		product.setId(productRepository.getLastId());
 		System.out.println("Save called with product: " + product.toString());
 		productRepository.save(product);
 	}
@@ -60,4 +75,5 @@ public class ProductController {
 		System.out.println("Delete called with id: " + id);
 		productRepository.deleteById(id);
 	}
+
 }

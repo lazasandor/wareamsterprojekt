@@ -1,5 +1,8 @@
 package com.waremaster.backend.services;
 
+import java.util.Optional;
+
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,4 +40,14 @@ public class ProductService {
 		return result != null ? result.map(mapper::toDto) : null;
 	}
 
+	public void update(Product product) {
+		Optional<Product> productFromDbOpt = productRepository.findById(product.getId());
+		if(productFromDbOpt.isPresent()) {
+			Product productFromDb = productFromDbOpt.get();
+			ModelMapper mapper = new ModelMapper();
+			mapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+			mapper.map(product, productFromDb);
+			productRepository.save(productFromDb);
+		}
+	}
 }

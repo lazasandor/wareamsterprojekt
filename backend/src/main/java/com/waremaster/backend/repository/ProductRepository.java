@@ -39,4 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     nativeQuery = true)
 	Page<Product> findProductByParameters(@Param("name") String name, @Param("catid") Long catid,@Param("id") Long id ,Pageable pageable);
 
+	@Query(value="select max(id) from product", nativeQuery = true)
+	Long getLastId();
+
 }

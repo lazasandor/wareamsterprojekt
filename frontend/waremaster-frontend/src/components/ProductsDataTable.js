@@ -13,20 +13,38 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { TextareaAutosize } from "@mui/material";
+import { Textarea } from "@mui/joy";
 
-const ActionsColumn = ({ id, handleSearchButtonClicked,page,size }) => {
-  const [open, setOpen] = React.useState(false);
+const categories = [
+  "Faanyagok",
+  "Építőanyagok",
+  "Szigetelőanyagok",
+  "Szárazépítészeti anyagok",
+  "Csavarok és rögzítőelemek",
+];
+
+const ActionsColumn = ({ id, handleSearchButtonClicked, page, size }) => {
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [editOpen, setEditOpen] = React.useState(false);
+  const [editedData, setEditedData] = React.useState({
+    id: null,
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    category: {},
+  });
 
   const handleDeleteOpen = () => {
-    setOpen(true);
+    setDeleteOpen(true);
   };
 
   const handleDeleteClose = () => {
-    setOpen(false);
+    setDeleteOpen(false);
   };
 
   const handleDelete = () => {
-    console.log("Delete button clicked for id:", id);
     ProductsService.delete(id)
       .then(() => {
         handleSearchButtonClicked(page, size, false);
@@ -37,8 +55,56 @@ const ActionsColumn = ({ id, handleSearchButtonClicked,page,size }) => {
   };
 
   const handleEditOpen = () => {
-      console.log("edit opened for id " + id)
+    ProductsService.getById(id).then((result) => {
+      setEditedData({
+        id: result.data.id,
+        name: result.data.name,
+        description: result.data.description,
+        price: result.data.price,
+        quantity: result.data.quantity,
+        category: result.data.category.category,
+      });
+    });
+
+    setEditOpen(true);
   };
+
+  const handleSave = async () => {
+    try {
+      const categoryResult = await ProductsService.getCategoryByName(
+        editedData.category
+      );
+      const updatedEditedData = {
+        ...editedData,
+        category: categoryResult.data,
+      };
+      setEditedData(updatedEditedData);
+
+      await ProductsService.update(updatedEditedData);
+
+      handleSearchButtonClicked(page, size, false);
+
+      setEditOpen(false);
+    } catch (error) {
+      console.error("Error saving product:", error);
+    }
+  };
+
+  const handleEditClose = () => {
+    setEditOpen(false);
+  };
+
+  const renderInput = (params) => (
+    <TextField
+      {...params}
+      label="Category"
+      variant="outlined"
+      InputProps={{
+        ...params.InputProps,
+      }}
+      sx={{ margin: 2, width: 300 }}
+    />
+  );
 
   return (
     <div>
@@ -49,7 +115,7 @@ const ActionsColumn = ({ id, handleSearchButtonClicked,page,size }) => {
         <DeleteIcon />
       </IconButton>
       <Dialog
-        open={open}
+        open={deleteOpen}
         onClose={handleDeleteClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -57,15 +123,72 @@ const ActionsColumn = ({ id, handleSearchButtonClicked,page,size }) => {
         <DialogTitle id="alert-dialog-title">{"Delete Record?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this record?
+            Are you sure you want to delete this product?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteClose} color="warning">
+          <Button onClick={handleDeleteClose} color="primary">
             No
           </Button>
           <Button onClick={handleDelete} color="warning" autoFocus>
             Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={editOpen} onClose={handleEditClose}>
+        <DialogTitle>Edit Product</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Name"
+            value={editedData.name}
+            onChange={(e) =>
+              setEditedData({ ...editedData, name: e.target.value })
+            }
+            sx={{ margin: 2 }}
+          />
+
+          <TextField
+            label="Quantity"
+            value={editedData.quantity}
+            onChange={(e) =>
+              setEditedData({ ...editedData, quantity: e.target.value })
+            }
+            sx={{ margin: 2 }}
+          />
+          <TextField
+            label="Price"
+            value={editedData.price}
+            onChange={(e) =>
+              setEditedData({ ...editedData, price: e.target.value })
+            }
+            sx={{ margin: 2 }}
+          />
+          <Autocomplete
+            options={categories}
+            renderInput={renderInput}
+            fullWidth
+            id="category"
+            value={editedData.category}
+            onChange={(e, newValue) =>
+              setEditedData({ ...editedData, category: newValue })
+            }
+          />
+          <Textarea
+            label="Description"
+            value={editedData.description}
+            onChange={(e) =>
+              setEditedData({ ...editedData, description: e.target.value })
+            }
+            rowsMin={3}
+            sx={{ margin: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSave} color="warning">
+            Save
+          </Button>
+          <Button onClick={handleEditClose} color="primary">
+            Cancel
           </Button>
         </DialogActions>
       </Dialog>
@@ -74,10 +197,20 @@ const ActionsColumn = ({ id, handleSearchButtonClicked,page,size }) => {
 };
 
 const PageSizeCustomOptions = (props) => {
+  const [addOpen, setAddOpen] = React.useState(false);
 
   const [rows, setRows] = React.useState([]);
 
   const [total, setTotal] = React.useState(0);
+
+  const [addData, setAddData] = React.useState({
+    id: null,
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    category: {},
+  });
 
   const [paginationModel, setPaginationModel] = React.useState({
     page: 0,
@@ -113,14 +246,6 @@ const PageSizeCustomOptions = (props) => {
     },
   ];
 
-  const categories = [
-    "Faanyagok",
-    "Építőanyagok",
-    "Szigetelőanyagok",
-    "Szárazépítészeti anyagok",
-    "Csavarok és rögzítőelemek",
-  ];
-
   const renderInput = (params) => (
     <TextField
       {...params}
@@ -129,6 +254,7 @@ const PageSizeCustomOptions = (props) => {
       InputProps={{
         ...params.InputProps,
       }}
+      sx={{ margin: 2, width: 300 }}
     />
   );
 
@@ -139,24 +265,21 @@ const PageSizeCustomOptions = (props) => {
   }, [total, setRowCountState]);
 
   useEffect(() => {
-    handleSearchButtonClicked(paginationModel.page, paginationModel.pageSize, false);
+    handleSearchButtonClicked(
+      paginationModel.page,
+      paginationModel.pageSize,
+      false
+    );
   }, [paginationModel.page, paginationModel.pageSize]);
 
   const handleSearchButtonClicked = (page, size, setToFirst) => {
     const name = document.getElementById("name").value;
     const id = document.getElementById("id").value;
     const category = document.getElementById("category").value;
-    //setPaginationModel({pageSize:10, page:0})
-    if(setToFirst){
-      setPaginationModel({pageSize:size, page:0})
+    if (setToFirst) {
+      setPaginationModel({ pageSize: size, page: 0 });
     }
-    ProductsService.searchByParameters(
-      page,
-      size,
-      name,
-      id,
-      category
-    )
+    ProductsService.searchByParameters(page, size, name, id, category)
       .then((res) => {
         setTotal(res.data.totalElements);
         setRows(res.data.content);
@@ -164,6 +287,36 @@ const PageSizeCustomOptions = (props) => {
       .catch((error) => {
         console.error("Error searching products:", error);
       });
+  };
+
+  const handleAddButtonClicked = () => {
+    setAddOpen(true);
+  };
+
+  const handleAddClose = () => {
+    setAddOpen(false);
+  };
+
+  const handleAddSave = async () => {
+    const categoryResult = await ProductsService.getCategoryByName(
+      addData.category
+    );
+ 
+    const updatedAddData = {
+      ...addData,
+      category: categoryResult.data,
+    };
+
+    
+    await ProductsService.save(updatedAddData);
+
+    handleSearchButtonClicked(
+      paginationModel.page,
+      paginationModel.pageSize,
+      false
+    );
+
+    setAddOpen(false);
   };
 
   return (
@@ -202,10 +355,24 @@ const PageSizeCustomOptions = (props) => {
           <Grid item>
             <Button
               variant="contained"
-              color="warning"
-              onClick={() => handleSearchButtonClicked(paginationModel.page, paginationModel.pageSize, true)}
+              color="inherit"
+              onClick={() =>
+                handleSearchButtonClicked(
+                  paginationModel.page,
+                  paginationModel.pageSize,
+                  true
+                )
+              }
             >
               Search
+            </Button>
+            <Button
+              sx={{ marginLeft: 2 }}
+              variant="contained"
+              color="warning"
+              onClick={() => handleAddButtonClicked()}
+            >
+              ADD
             </Button>
           </Grid>
         </Grid>
@@ -224,6 +391,55 @@ const PageSizeCustomOptions = (props) => {
           paginationMode="server"
           onPaginationModelChange={setPaginationModel}
         />
+        <Dialog open={addOpen}>
+          <DialogTitle>Add Product</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Name"
+              sx={{ margin: 2 }}
+              onChange={(e) => setAddData({ ...addData, name: e.target.value })}
+            />
+
+            <TextField
+              label="Quantity"
+              sx={{ margin: 2 }}
+              onChange={(e) =>
+                setAddData({ ...addData, quantity: e.target.value })
+              }
+            />
+            <TextField
+              label="Price"
+              sx={{ margin: 2 }}
+              onChange={(e) =>
+                setAddData({ ...addData, price: e.target.value })
+              }
+            />
+            <Autocomplete
+              options={categories}
+              renderInput={renderInput}
+              fullWidth
+              onChange={(e, newValue) =>
+                setAddData({ ...addData, category: newValue })
+              }
+            />
+            <Textarea
+              placeholder="Description"
+              onChange={(e) =>
+                setAddData({ ...addData, description: e.target.value })
+              }
+              rowsMin={3}
+              sx={{ margin: 2 }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button color="warning" onClick={handleAddSave}>
+              Save
+            </Button>
+            <Button color="primary" onClick={handleAddClose}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
