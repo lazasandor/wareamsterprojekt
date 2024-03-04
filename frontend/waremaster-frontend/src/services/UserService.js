@@ -19,6 +19,13 @@ const UserService = {
       },
     });
   },
+  getIdByLoginInputs: (user) => {
+    const requestBody = {
+      email: user.email,
+      password: user.password
+    }
+    return axios.post(USER_API_URL + "getid", requestBody);
+  }
 };
 
 export default UserService;

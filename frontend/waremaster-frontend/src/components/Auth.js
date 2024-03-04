@@ -30,6 +30,12 @@ export default function Auth (props){
       password: loginInputs.password,
     };
     e.preventDefault();
+    UserService.getIdByLoginInputs(user).then((res) => {
+      if(res.data){
+        localStorage.setItem("loggedid", res.data);
+        console.log(localStorage.getItem("loggedid"));
+      }
+    })
     UserService.loginUser(user).then((res) => {
       if(res.data){
         localStorage.setItem("authToken", res.data[1])
@@ -38,6 +44,7 @@ export default function Auth (props){
         setAlertMessage("Hibás email vagy jelszó.\nPróbáld Újra!")
       }
     })
+    
   };
 
 

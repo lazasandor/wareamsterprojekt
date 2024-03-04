@@ -7,5 +7,5 @@ import com.waremaster.backend.entity.Storage;
 
 @Repository
 public interface StorageRepository extends JpaRepository<Storage, Long>{
-
+	
 }

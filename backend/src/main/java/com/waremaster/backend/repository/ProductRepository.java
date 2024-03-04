@@ -1,5 +1,6 @@
 package com.waremaster.backend.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.waremaster.backend.dto.ProductDto;
 import com.waremaster.backend.entity.Category;
 import com.waremaster.backend.entity.Product;
+import com.waremaster.backend.entity.ProductToStorage;
 
 import org.springframework.data.jpa.repository.Modifying;
 
@@ -41,5 +43,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 
 	@Query(value="select max(id) from product", nativeQuery = true)
 	Long getLastId();
+
+	
 
 }

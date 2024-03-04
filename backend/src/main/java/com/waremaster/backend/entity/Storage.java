@@ -65,5 +65,11 @@ public class Storage {
 		this.zipcode = zipcode;
 	}
 
+	@Override
+	public String toString() {
+		return "Storage [id=" + id + ", address=" + address + ", county=" + county + ", city=" + city + ", zipcode="
+				+ zipcode + "]";
+	}
+
 
 }
