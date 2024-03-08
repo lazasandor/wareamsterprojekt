@@ -25,6 +25,9 @@ const UserService = {
       password: user.password
     }
     return axios.post(USER_API_URL + "getid", requestBody);
+  },
+  registerUser: (user) => {
+    return axios.post(USER_API_URL + "register", user)
   }
 };
 

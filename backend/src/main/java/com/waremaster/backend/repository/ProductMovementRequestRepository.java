@@ -28,4 +28,14 @@ public interface ProductMovementRequestRepository extends JpaRepository<ProductM
 			nativeQuery=true)
 	void increaseQuantity(@Param("toid") Long fromId,@Param("pid")  Long productId, 
 						  @Param("quantity")  Integer quantity);
+	
+	@Modifying
+	@Transactional
+	@Query(value="UPDATE product_movement_request SET status = 'Done' WHERE id = :id", nativeQuery = true)
+	void setStatusDone(@Param("id") Integer id);
+	
+	@Modifying
+	@Transactional
+	@Query(value="UPDATE product_movement_request SET status = 'Cancelled' WHERE id = :id", nativeQuery = true)
+	void setStatusCancel(@Param("id") Integer id);
 }

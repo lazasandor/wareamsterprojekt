@@ -7,15 +7,16 @@ import LockIcon from "@mui/icons-material/Lock";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import UserService from "../services/UserService";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-export default function Auth (props){
+export default function Auth(props) {
   const navigate = useNavigate();
   const [loginInputs, setLoginInputs] = useState({
     email: "",
     password: "",
   });
 
-  const [alertMessage, setAlertMessage] = useState("")
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleChange = (e) => {
     setLoginInputs((prevState) => ({
@@ -31,23 +32,23 @@ export default function Auth (props){
     };
     e.preventDefault();
     UserService.getIdByLoginInputs(user).then((res) => {
-      if(res.data){
+      if (res.data) {
         localStorage.setItem("loggedid", res.data);
         console.log(localStorage.getItem("loggedid"));
       }
-    })
+    });
     UserService.loginUser(user).then((res) => {
-      if(res.data){
-        localStorage.setItem("authToken", res.data[1])
-        navigate("/products")
-      }else{
-        setAlertMessage("Hibás email vagy jelszó.\nPróbáld Újra!")
+      if (res.data) {
+        localStorage.setItem("authToken", res.data[1]);
+        navigate("/products");
+      } else {
+        setAlertMessage("Hibás email vagy jelszó.\nPróbáld Újra!");
       }
-    })
-    
+    });
   };
-
-
+  const handleNavigateRegister = () => {
+    navigate("/register")
+  }
 
   return (
     <div
@@ -120,21 +121,31 @@ export default function Auth (props){
               value={loginInputs.password}
               onChange={handleChange}
             />
+            <div>{alertMessage}</div>
             <div>
-              {alertMessage}
+              <Button
+                endIcon={<LoginIcon />}
+                type="submit"
+                sx={{ marginTop: 3, borderRadius: 3, marginRight:5, width:120 }}
+                variant="contained"
+                color="warning"
+              >
+                Login
+              </Button>
+              <Button
+                endIcon={<AccountCircleIcon />}
+                type="submit"
+                sx={{ marginTop: 3, borderRadius: 3, width:120 }}
+                variant="contained"
+                color="warning"
+                onClick={handleNavigateRegister}
+              >
+                Register
+              </Button>
             </div>
-            <Button
-              endIcon={<LoginIcon />}
-              type="submit"
-              sx={{ marginTop: 3, borderRadius: 3 }}
-              variant="contained"
-              color="warning"
-            >
-              Login
-            </Button>
           </Box>
         </form>
       </div>
     </div>
   );
-};
+}

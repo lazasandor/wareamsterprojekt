@@ -12,8 +12,6 @@ import UserService from "../services/UserService";
 export default function Header(props) {
   const navigate = useNavigate();
 
-
-
   const handleNavbarClick = (page) => {
     switch (page) {
       case "Requests":

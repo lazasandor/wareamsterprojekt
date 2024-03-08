@@ -1,6 +1,7 @@
 package com.waremaster.backend.entity;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +37,7 @@ public class ProductMovementRequest {
 	protected Integer quantity;
 
 	@Column(name="movement_date")
-	protected LocalDateTime movementDate;
+	protected String movementDate;
 
 	@Column(name="status")
 	protected String status;
@@ -93,11 +94,11 @@ public class ProductMovementRequest {
 		this.quantity = quantity;
 	}
 
-	public LocalDateTime getMovementDate() {
+	public String getMovementDate() {
 		return movementDate;
 	}
 
-	public void setMovementDate(LocalDateTime movementDate) {
+	public void setMovementDate(String movementDate) {
 		this.movementDate = movementDate;
 	}
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.waremaster.backend.entity.User;
 import com.waremaster.backend.repository.UserRepository;
 import com.waremaster.backend.services.JwtTokenProvider;
+import com.waremaster.backend.services.UserService;
 
 @RestController
 @CrossOrigin
@@ -23,6 +24,9 @@ public class UserController {
 
 	@Autowired
 	private JwtTokenProvider tokenProvider;
+	
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	UserRepository userRepository;
@@ -59,6 +63,11 @@ public class UserController {
         }
     }
 	
+	@PostMapping("/register")
+	public User registerUser(@RequestBody User user) {
+		return userService.regUser(user);
+	}
+	
 	@PostMapping("/getid")
 	public Long getId(@RequestBody User user) {
 		return userRepository.findId(user.getEmail(), user.getPassword());
@@ -68,4 +77,6 @@ public class UserController {
 	public User findById(@PathVariable Long id) {
 		return userRepository.findById(id).get();
 	}
+	
+	
 }

@@ -1,6 +1,12 @@
 package com.waremaster.backend.services;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,23 +27,63 @@ public class ProductMovementRequestService {
 	
 	public ProductMovementRequest handleRequest(ProductMovementRequest pm) {
 		
-		ProductToStorage entity = productToStorageRepository.findByStorageAndProductId(pm.getFromStorage().getId(), 
-				pm.getProduct().getId());
+		pm.setMovementDate(ZonedDateTime.now( ZoneId.of( "Europe/Budapest" ) )
+		         .truncatedTo( java.time.temporal.ChronoUnit.MINUTES )
+		         .format( DateTimeFormatter.ofPattern( "MM/dd/uuuu HH:mm" , Locale.GERMANY ) ));
 		
-		if(entity.getQuantity() < pm.getQuantity()) {
-			System.out.println("Failed!");
-			return null;
-		}
-		
-		pm.setMovementDate(LocalDateTime.now());
 		pm.setStatus("In Progress...");
-		
-		productMovementRequestRepository.decreaseQuantity(pm.getFromStorage().getId(),
-													   pm.getProduct().getId(), pm.getQuantity());
-		
-		productMovementRequestRepository.increaseQuantity(pm.getToStorage().getId(),
-				   									   pm.getProduct().getId(), pm.getQuantity());
-		
+
 		return productMovementRequestRepository.save(pm);
 	}
+
+	public ProductMovementRequest requestDone(Long id) {
+		Optional<ProductMovementRequest> pm = productMovementRequestRepository.findById(id);
+		if(pm.isPresent()) {
+			ProductMovementRequest p = pm.get();
+			productMovementRequestRepository.decreaseQuantity(p.getFromStorage().getId(),
+					   p.getProduct().getId(), p.getQuantity());
+
+			productMovementRequestRepository.increaseQuantity(p.getToStorage().getId(),
+					   p.getProduct().getId(), p.getQuantity());
+			productMovementRequestRepository.setStatusDone(p.getId());
+			
+			return p;
+		}
+		return null;
+	}
+	
+	public ProductMovementRequest requestCancel(Long id) {
+		Optional<ProductMovementRequest> pm = productMovementRequestRepository.findById(id);
+		if(pm.isPresent()) {
+			ProductMovementRequest p = pm.get();
+			
+			productMovementRequestRepository.setStatusCancel(p.getId());
+			
+			return p;
+		}
+		return null;
+	}
+	
+	public int[] getStatus() {
+		List<ProductMovementRequest> all = productMovementRequestRepository.findAll();
+		int array[] = new int[3];
+		int progressSum = 0, doneSum = 0, cancelSum = 0;
+		for(ProductMovementRequest p : all) {
+			if(p.getStatus().equalsIgnoreCase("In Progress...")) {
+				progressSum++;
+			}
+			if(p.getStatus().equalsIgnoreCase("Done")) {
+				doneSum++;
+			}
+			if(p.getStatus().equalsIgnoreCase("Cancelled")) {
+				cancelSum++;
+			}
+		}
+		array[0] = progressSum;
+		array[1] = doneSum;
+		array[2] = cancelSum;
+		return array;
+	}
+
+	
 }

@@ -13,6 +13,7 @@ import ProductsPage from "./pages/ProductsPage";
 import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
 import StoragesPage from "./pages/StoragesPage"
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element = {<RegisterPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/requests" element={<RequestsPage />} />
           <Route path="/request" element={<RequestPage />} />
