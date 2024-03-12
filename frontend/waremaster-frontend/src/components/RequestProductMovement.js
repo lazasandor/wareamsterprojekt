@@ -26,6 +26,9 @@ const RequestProductMovement = () => {
   const [detailStorageFrom, setDetailStorageFrom] = React.useState("");
   const [detailStorageTo, setDetailStorageTo] = React.useState("");
   const [successOpen, setSuccessOpen] = React.useState(false);
+  const [sum, setSum] = React.useState("");
+  const [capacity, setCapacity] = React.useState("");
+  const [capAlert, setCapAlert] = React.useState("");
 
   const handleFromChange = async (event) => {
     const s = await fetch(
@@ -42,8 +45,12 @@ const RequestProductMovement = () => {
     const s = await fetch(
       "http://localhost:8080/api/storage/findbyid/" + event.target.value
     );
+    const sum = await fetch("http://localhost:8080/api/storage/getsumbyid/" + event.target.value
+    )
+    const sumres = await sum.json();
+    setSum(sumres);
     const res = await s.json();
-    console.log(res);
+    setCapacity(res.capacity)
     setDetailStorageTo(res);
     setRequestTo(event.target.value);
   };
@@ -59,9 +66,9 @@ const RequestProductMovement = () => {
       (product) => product.id === event.target.value
     );
     console.log(event.target.value);
-
+    console.log(product)
     setProductForDetail(product);
-    setMaxQuantity(product.quantity);
+    setMaxQuantity(event.target.value.quantity);
   };
 
   useEffect(() => {
@@ -100,6 +107,8 @@ const RequestProductMovement = () => {
       return;
     }
     if (!quantity || Number(quantity) > maxQuantity) {
+      console.log(maxQuantity)
+      console.log("fasz")
       setAlertOpen(true);
       return;
     }
@@ -107,11 +116,17 @@ const RequestProductMovement = () => {
       setAlertOpen(true);
       return;
     }
-
+    if (Number(quantity) + Number(sum) > capacity){
+      setCapAlert("Not enough space!")
+      return;
+    }
+    console.log(maxQuantity)
+    
     setDetailOpen(true);
   };
 
   const handleRequestSubmit = () => {
+    setCapAlert("");
     checkInputFields();
   };
 
@@ -186,7 +201,9 @@ const RequestProductMovement = () => {
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <h4 style={{ marginRight: 10, width: 250 }}>
-              Storage to move product to :
+              Storage to move product to:<br/>
+              <strong>Capacity: </strong>
+              <strong>{sum}/{detailStorageTo.capacity}</strong>
             </h4>
             <FormControl sx={{ width: 400 }}>
               <InputLabel>To</InputLabel>
@@ -235,7 +252,7 @@ const RequestProductMovement = () => {
               marginTop: 20,
             }}
           >
-            <h4 style={{ marginRight: 10, width: 250 }}>Quantity:</h4>
+            <h4 style={{ marginRight: 10, width: 250 }}>Quantity: <br/> <strong style={{color:'red'}}>{capAlert}</strong></h4>
             <TextField
               label="Quantity"
               variant="outlined"

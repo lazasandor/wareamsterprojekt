@@ -37,4 +37,9 @@ public class StorageController {
 	public int[] getSums() {
 		return storageService.getSums();
 	}
+	
+	@GetMapping(value="/getsumbyid/{id}")
+	public int getSumById(@PathVariable int id) {
+		return storageRepository.getSumById(id);
+	}
 }

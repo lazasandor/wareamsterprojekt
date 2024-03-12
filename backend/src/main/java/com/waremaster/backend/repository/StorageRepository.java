@@ -12,5 +12,4 @@ public interface StorageRepository extends JpaRepository<Storage, Long>{
 
 	@Query(value="select sum(quantity) from product_to_storage where storage_id = :id", nativeQuery=true)
 	int getSumById(@Param("id") int id);
-	
 }

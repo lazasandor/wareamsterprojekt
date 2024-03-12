@@ -27,9 +27,6 @@ public class Product {
 	@Column(name="price")
 	protected Integer price;
 
-	@Column(name="quantity")
-	protected Integer quantity;
-
 	@ManyToOne()
 	@JoinColumn(name="category_id")
 	protected Category category;
@@ -50,10 +47,6 @@ public class Product {
 
 	public Integer getPrice() {
 		return price;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
 	}
 
 	public Category getCategory() {
@@ -78,18 +71,8 @@ public class Product {
 		this.price = price;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", quantity=" + quantity + ", category=" + category + "]";
 	}
 	
 	
