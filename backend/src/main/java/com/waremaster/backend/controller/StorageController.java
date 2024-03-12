@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.waremaster.backend.entity.Storage;
 import com.waremaster.backend.repository.StorageRepository;
+import com.waremaster.backend.services.StorageService;
 
 @RestController
 @RequestMapping(value="api/storage", produces="application/json")
@@ -17,6 +18,9 @@ public class StorageController {
 
 	@Autowired
 	StorageRepository storageRepository;
+	
+	@Autowired
+	StorageService storageService;
 	
 	@GetMapping(value="/findall")
 	public List<Storage> findAll(){
@@ -29,4 +33,8 @@ public class StorageController {
 		return storageRepository.findById(id).get();
 	}
 	
+	@GetMapping(value="/getsums")
+	public int[] getSums() {
+		return storageService.getSums();
+	}
 }

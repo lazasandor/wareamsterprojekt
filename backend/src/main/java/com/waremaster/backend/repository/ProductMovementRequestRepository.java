@@ -1,5 +1,10 @@
 package com.waremaster.backend.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,4 +43,12 @@ public interface ProductMovementRequestRepository extends JpaRepository<ProductM
 	@Transactional
 	@Query(value="UPDATE product_movement_request SET status = 'Cancelled' WHERE id = :id", nativeQuery = true)
 	void setStatusCancel(@Param("id") Integer id);
+	
+	@Query(value="select * from product_movement_request where user_id = :id", nativeQuery=true)
+	Page<ProductMovementRequest> findAllForUser(Pageable pageable, @Param("id") Long id);
+	
+	@Query(value="select * from product_movement_request where user_id = :id", nativeQuery=true)
+	List<ProductMovementRequest> findAllByUserid(Long id);
+	
+	
 }

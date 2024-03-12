@@ -64,8 +64,8 @@ public class ProductMovementRequestService {
 		return null;
 	}
 	
-	public int[] getStatus() {
-		List<ProductMovementRequest> all = productMovementRequestRepository.findAll();
+	public int[] getStatus(Long id) {
+		List<ProductMovementRequest> all = productMovementRequestRepository.findAllByUserid(id);
 		int array[] = new int[3];
 		int progressSum = 0, doneSum = 0, cancelSum = 0;
 		for(ProductMovementRequest p : all) {

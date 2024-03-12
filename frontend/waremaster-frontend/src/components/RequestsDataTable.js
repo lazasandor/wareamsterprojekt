@@ -309,7 +309,7 @@ const RequestsDataTable = () => {
   };
 
   const loadStatus = () => {
-    RequestMovementService.getStatus().then((res) => {
+    RequestMovementService.getStatus(localStorage.getItem("loggedid")).then((res) => {
       if (res.data) {
         setSumStatus({
           inProgress: res.data[0],

@@ -46,16 +46,16 @@ public class ProductMovementRequestController {
 		return productMovementRequestService.requestCancel(id);
 	}
 	
-	@GetMapping(value="/find")
+	@GetMapping(value="/find/{id}")
 	Page<ProductMovementRequest> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size){
+            @RequestParam(value = "size", defaultValue = "10") int size, @PathVariable Long id){
 		
-		return productMovementRequestRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+		return productMovementRequestRepository.findAllForUser(PageRequest.of(page, size, Sort.by("id").descending()), id);
 	}
 	
-	@GetMapping(value="/getstatus")
-	int[] getStatus(){
-		return productMovementRequestService.getStatus();
+	@GetMapping(value="/getstatus/{id}")
+	int[] getStatus(@PathVariable Long id){
+		return productMovementRequestService.getStatus(id);
 	}
 	
 	@GetMapping(value="/findbyid/{id}")

@@ -24,6 +24,17 @@ public class Storage {
 
 	@Column(name="zipcode")
 	protected Integer zipcode;
+	
+	@Column(name="capacity")
+	protected Integer capacity;
+
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
+	}
 
 	public Long getId() {
 		return id;
