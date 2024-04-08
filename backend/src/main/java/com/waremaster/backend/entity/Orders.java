@@ -10,21 +10,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Entity
-public class Order {
+public class Orders {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	protected Long id;
 
-	@Column(name="order_date")
+	@Column(name="date")
 	protected LocalDateTime orderDate;
 
 	@Column(name="price")
@@ -45,6 +47,25 @@ public class Order {
 	@ManyToOne()
 	@JoinColumn(name="storage_id")
 	protected Storage storageOrderedFrom;
+	
+	@Column(name="items")
+	protected String items;
+
+	public Storage getStorageOrderedFrom() {
+		return storageOrderedFrom;
+	}
+
+	public void setStorageOrderedFrom(Storage storageOrderedFrom) {
+		this.storageOrderedFrom = storageOrderedFrom;
+	}
+
+	public String getItems() {
+		return items;
+	}
+
+	public void setItems(String items) {
+		this.items = items;
+	}
 
 	public Long getId() {
 		return id;

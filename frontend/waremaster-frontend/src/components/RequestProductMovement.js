@@ -238,7 +238,7 @@ const RequestProductMovement = () => {
               >
                 {productsToMove.map((productsToMove) => (
                   <MenuItem key={productsToMove.id} value={productsToMove}>
-                    {productsToMove.product.name} ({productsToMove.quantity})
+                    {productsToMove.product && productsToMove.product.name} ({productsToMove.quantity})
                   </MenuItem>
                 ))}
               </Select>

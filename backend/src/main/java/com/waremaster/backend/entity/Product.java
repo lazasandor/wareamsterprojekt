@@ -30,11 +30,22 @@ public class Product {
 	@ManyToOne()
 	@JoinColumn(name="category_id")
 	protected Category category;
+	
+	@Column(name="quantity")
+	protected Integer quantity;
 
 	//Getters
 
 	public Long getId() {
 		return id;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getName() {

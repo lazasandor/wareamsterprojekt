@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 
 const USER_API_URL = "http://localhost:8080/api/user/";
 const UserService = {

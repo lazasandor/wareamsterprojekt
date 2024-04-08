@@ -24,7 +24,6 @@ import com.waremaster.backend.services.ProductService;
 import lombok.extern.log4j.Log4j;
 
 @RestController
-@Log4j
 @RequestMapping(value="/api/product", produces="application/json")
 public class ProductController {
 
@@ -86,6 +85,7 @@ public class ProductController {
 	public void delete(@PathVariable Long id) {
 		System.out.println("Delete called with id: " + id);
 		productRepository.deleteById(id);
+		productRepository.deleteFromConTable(id);
 	}
 
 }

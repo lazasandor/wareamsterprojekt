@@ -29,9 +29,6 @@ export default function Header(props) {
       case "Request":
         navigate("/request");
         break;
-      case "Account":
-        navigate("/account");
-        break;
       case "Logout":
         localStorage.removeItem("authToken");
         navigate("/");
@@ -77,12 +74,8 @@ export default function Header(props) {
               label="Request a Product movement"
               onClick={() => handleNavbarClick("Request")}
             ></Tab>
-            <Tab
-              label="Account"
-              onClick={() => handleNavbarClick("Account")}
-            ></Tab>
-          </Tabs>
 
+          </Tabs>
           <Button
             variant="outlined"
             color="inherit"

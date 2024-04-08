@@ -50,7 +50,8 @@ public class UserController {
 			return null;
 		}
 		System.out.println("Login called with: " + u.toString());
-		return u.createUserToken(tokenProvider.createToken(""+u.getId()));
+		
+		return u.createUserToken(tokenProvider.createToken("" + u.getId()));
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")

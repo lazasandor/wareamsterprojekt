@@ -224,7 +224,7 @@ const PageSizeCustomOptions = (props) => {
     { field: "name", headerName: "Name", width: 200 },
     { field: "description", headerName: "Description", width: 300 },
     { field: "price", headerName: "Price", width: 120 },
-    { field: "quantity", headerName: "Quantity", width: 120 },
+    { field: "quantity", headerName: "Quantity", width: 120},
     {
       field: "category",
       headerName: "Category",

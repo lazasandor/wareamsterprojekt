@@ -69,11 +69,13 @@ export const Register = () => {
       user.lastName === ""
     ) {
       setAlertMessage("Please fill all fields!");
+      return;
     }
     if (!regularExpression.test(user.password)) {
       setAlertMessage(
         "Password must be 6 to 16 character long\n\n\n with at least one number and one special character."
       );
+      return;
     }
     setAlertMessage("");
     registerUserSuccess(user);
@@ -213,22 +215,21 @@ export const Register = () => {
           </Box>
         </form>
       </div>
-      <div style={{display:'flex', justifyContent:'center'}}>
-      <Dialog open={regSucc}>
-        <DialogTitle>Success!</DialogTitle>
-        <DialogContent>
-          <DialogContentText style={{marginLeft:5, marginRight:5}}>
-            Registered successfully, now you can log-in.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button color="warning" onClick={() => handleBackToLogin()}>
-            Back to login
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Dialog open={regSucc}>
+          <DialogTitle>Success!</DialogTitle>
+          <DialogContent>
+            <DialogContentText style={{ marginLeft: 5, marginRight: 5 }}>
+              Registered successfully, now you can log-in.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button color="warning" onClick={() => handleBackToLogin()}>
+              Back to login
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
-      
     </div>
   );
 };

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.waremaster.backend.dto.ProductDto;
 import com.waremaster.backend.entity.Category;
@@ -23,9 +24,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 
 	@Override
 	Product save(Product product);
-
-//	@Query("select p from Product where p.id = ?1")
-//	Page<Product> findById(Long id, Pageable pageable);
 
 	@Override
 	Page<Product> findAll(Pageable pageable);
@@ -43,6 +41,11 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 
 	@Query(value="select max(id) from product", nativeQuery = true)
 	Long getLastId();
+
+	@Modifying
+	@Transactional
+	@Query(value="DELETE FROM product_to_storage WHERE product_id = :id", nativeQuery = true)
+	void deleteFromConTable(@Param("id") Long id);
 
 	
 

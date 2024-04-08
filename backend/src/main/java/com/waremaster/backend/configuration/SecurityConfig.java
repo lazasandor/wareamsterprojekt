@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,8 +23,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
 
 		http
-		.csrf(csrf -> csrf.disable())
-			//.csrf((csrf) -> csrf.disable())
+			.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()))
 			.cors((cors) -> cors.configurationSource(corsConfigurationSource()));
 		return http.build();
 	}
@@ -39,4 +40,10 @@ public class SecurityConfig {
 	    source.registerCorsConfiguration("/**", configuration);
 	    return source;
 	}
+	
+	private CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-CSRF-TOKEN");
+        return repository;
+    }
 }

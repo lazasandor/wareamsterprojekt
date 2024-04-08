@@ -27,7 +27,6 @@ function App() {
           <Route path="/request" element={<RequestPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/account" element={<AccountPage />} />
           <Route path="/storages" element={<StoragesPage />} />
         </Routes>
       </BrowserRouter>
